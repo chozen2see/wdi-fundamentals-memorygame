@@ -63,6 +63,22 @@ img {
 	margin: 40px 8px;
 }
 
+#game-board > img {
+	cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+  background-color: #00D0CB;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 10px;
+  margin: 20px;
+  border-radius: 4px;
+ }
+
 footer {
 	text-transform: uppercase;
 	padding: 0 20px;

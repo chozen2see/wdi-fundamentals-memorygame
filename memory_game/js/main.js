@@ -1,3 +1,4 @@
+// Create array of card objects
 let cards = [
 	{
 		rank: "queen",
@@ -21,44 +22,65 @@ let cards = [
 	}
 ];
 
+// Keep track of flipped cards
 let cardsInPlay = [];
 
-/*
 
-let cardOne = cards[0];
-let cardTwo = cards[3];
+function resetBoard() {
+	// Reset the game board
 
-cardsInPlay.push(cardOne);
-cardsInPlay.push(cardTwo);
+	cardsInPlay = [];
 
-for (c = 0; c < cardsInPlay.length; c++) {
-	console.log("User flipped " + cardsInPlay[c]);
+	let cards = document.getElementsByTagName('img');
+
+	for (let c = 0; c < cards.length; c++) {
+		cards[c].setAttribute('src', 'images/back.png');
+	}
 }
 
-*/
-
 function checkForMatch() {
+	// If two cards have been flipped, do they match?
+
 	if (cardsInPlay.length === 2) {
 		if (cardsInPlay[0] === cardsInPlay[1]) {
-			console.log("You found a match!");
+			alert("You found a match!");
 		} else {
-			console.log("Sorry, try again.");
+			alert("Sorry, try again.");
 		}
 	}
 }
 
-function flipCard(cardId) {
+function flipCard() {
+	// Flip the card to show the card face 
+
+	let cardId = this.getAttribute('data-id');
 	let flippedCard = cards[cardId].rank;
 
 	cardsInPlay.push(flippedCard);
-
-	console.log("User flipped " + flippedCard);
-	console.log(cards[cardId].suit);
-	console.log(cards[cardId].cardImage);
-	console.log("");
+	this.setAttribute('src', cards[cardId].cardImage);
 
 	checkForMatch();
 }
 
-flipCard(0);
-flipCard(2);
+function createBoard() {
+	// Create the game board
+
+	for (let c = 0; c < cards.length; c++) {
+		// Create each card and add to the board
+
+		let cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('alt', cards[c].rank + ' of ' + cards[c].suit);
+		cardElement.setAttribute('data-id', c);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement);
+	}	
+
+	// Listen for click then reset the board
+	let buttonReset = document.getElementsByTagName('button')[0];
+	buttonReset.addEventListener('click', resetBoard);
+}
+
+// Create board once page loads
+createBoard();
+
